@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tileBG">#404961</color>
+    <color name="buttonColor">#786fa6</color>
+    <color name="buttonRippleColor">#8D83BF</color>
+    <color name="appBG">#303952</color>
+    <color name="fontColor">#c8c8c8</color>
 </resources>
