@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/buttonColor"
+        android:gravity="center"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textColor="@color/fontColor"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/tileBG"
+        android:editable="false"
+        android:gravity="center_horizontal"
+        android:maxWidth="200dp"
+        android:text="bla bla bla bla bla bla bla bl sdaf sadf sdaf sadfsa dfsa fsa dfsa dfas dfa bla bla bla bla "
+        android:textAlignment="viewStart"
+        android:textColor="@color/fontColor"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="0dp"/>
+</TableLayout>
