@@ -15,22 +15,20 @@
         android:layout_marginTop="666dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="35dp"
+        android:background="@drawable/buttons"
         android:text="Save Note"
         android:textColor="@color/fontColor"
-        android:background="@drawable/buttons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.563"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="357dp"
-        android:layout_height="495dp"
+        android:layout_width="358dp"
+        android:layout_height="549dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="118dp"
+        android:layout_marginTop="79dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
         android:background="@color/tileBG"
@@ -47,7 +45,7 @@
         android:layout_width="359dp"
         android:layout_height="39dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         android:background="@color/buttonColor"
         android:text="title"
@@ -56,6 +54,5 @@
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
