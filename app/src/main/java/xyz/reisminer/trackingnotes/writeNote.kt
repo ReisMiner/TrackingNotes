@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatButton
 
@@ -36,7 +35,6 @@ class writeNote : AppCompatActivity() {
     }
 
     private fun saveNote (){
-
 
         openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
             it.write(contentEditView.text.toString().toByteArray())
