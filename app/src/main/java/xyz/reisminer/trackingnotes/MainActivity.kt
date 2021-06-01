@@ -6,7 +6,6 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +19,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, writeNote::class.java)
             startActivity(intent)
         }
-
-
     }
 
     private fun createHomeTiles(y: Int) {

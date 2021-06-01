@@ -11,21 +11,22 @@
         android:text="Title"
         android:textAlignment="center"
         android:textColor="@color/fontColor"
+        android:padding="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="0dp"
         android:layout_marginTop="10dp"/>
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tileBG"
-        android:editable="false"
         android:gravity="center_horizontal"
         android:maxWidth="200dp"
         android:text="bla bla bla bla bla bla bla bl sdaf sadf sdaf sadfsa dfsa fsa dfsa dfas dfa bla bla bla bla "
         android:textAlignment="viewStart"
         android:textColor="@color/fontColor"
+        android:padding="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
