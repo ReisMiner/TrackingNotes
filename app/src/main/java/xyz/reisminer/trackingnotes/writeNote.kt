@@ -10,17 +10,26 @@ class writeNote : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_note)
+
         val createButton = findViewById<AppCompatButton>(R.id.createButton)
         createButton.setOnClickListener{
             saveNote()
         }
+        val deleteButton = findViewById<AppCompatButton>(R.id.deleteButton)
+        createButton.setOnClickListener{
+            deleteNote()
+        }
     }
 
-    fun saveNote (){
-        val titleEditView = findViewById(R.id.TextViewSaveTitle) as EditText
-        val contentEditView = findViewById(R.id.TextViewSaveText) as EditText
+    private fun saveNote (){
+        val titleEditView = findViewById<EditText>(R.id.TextViewSaveTitle)
+        val contentEditView = findViewById<EditText>(R.id.TextViewSaveText)
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun deleteNote(){
+
     }
 }
