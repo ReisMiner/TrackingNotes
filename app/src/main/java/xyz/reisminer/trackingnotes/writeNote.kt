@@ -1,5 +1,6 @@
 package xyz.reisminer.trackingnotes
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +17,7 @@ class writeNote : AppCompatActivity() {
             saveNote()
         }
         val deleteButton = findViewById<AppCompatButton>(R.id.deleteButton)
-        createButton.setOnClickListener{
+        deleteButton.setOnClickListener{
             deleteNote()
         }
     }
@@ -25,6 +26,9 @@ class writeNote : AppCompatActivity() {
         val titleEditView = findViewById<EditText>(R.id.TextViewSaveTitle)
         val contentEditView = findViewById<EditText>(R.id.TextViewSaveText)
 
+        openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
+            it.write(contentEditView.text.toString().toByteArray())
+        }
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
