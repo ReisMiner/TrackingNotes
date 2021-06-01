@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TableRow
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 
@@ -32,10 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         val tr = mutableListOf<TableRow>()
 
-        val o = TableLayout.inflate(this, R.layout.tiles_home, null)
-        val o2 = TableLayout.inflate(this, R.layout.tiles_home, null)
-
-        val x = mutableListOf<TableLayout>()
+        val tileList = mutableListOf<TableLayout>()
 
         var helper = true
 
@@ -43,13 +41,15 @@ class MainActivity : AppCompatActivity() {
             if (helper) {
                 tr.add(TableRow(this))
                 tr[i / 2].layoutParams = params
-                x.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
-                tr[i / 2].addView(x[i])
-                helper = !helper;
+                tileList.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
+                tileList[i].setOnClickListener { openAccordingTile((tileList[i].getChildAt(0)as TextView).text as String) }
+                tr[i / 2].addView(tileList[i])
+                helper = !helper
             } else {
-                x.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
-                tr[i / 2].addView(x[i])
-                helper = !helper;
+                tileList.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
+                tileList[i].setOnClickListener { openAccordingTile((tileList[i].getChildAt(0)as TextView).text as String) }
+                tr[i / 2].addView(tileList[i])
+                helper = !helper
             }
         }
 
@@ -58,6 +58,13 @@ class MainActivity : AppCompatActivity() {
                 trr,
                 params
             )
+    }
+
+    private fun openAccordingTile(title: String) {
+        val intent = Intent(this, writeNote::class.java)
+        intent.putExtra("new",false)
+        intent.putExtra("title",title)
+        startActivity(intent)
     }
 
 }
