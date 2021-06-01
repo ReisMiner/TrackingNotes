@@ -2,8 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@color/appBG">
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/TextViewHomeTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/tileBG"
+        android:padding="5dp"
+        android:text="TrackingNotes"
+        android:textColor="@color/fontColor"
+        android:textFontWeight="1200"
+        android:textSize="30sp" />
 
     <ScrollView
         android:layout_width="fill_parent"
