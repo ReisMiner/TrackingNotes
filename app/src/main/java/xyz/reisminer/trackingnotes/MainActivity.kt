@@ -17,14 +17,9 @@ import androidx.appcompat.widget.AppCompatButton
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_main)
 
         createHomeTiles(10)
-
-        setContentView(R.layout.titlebar);
-        window.setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
-
 
         val createButton = findViewById<AppCompatButton>(R.id.createButton)
         createButton.setOnClickListener {
