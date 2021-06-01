@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#303952"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/appBG">
 
-    <TableLayout
-        android:id="@+id/mainTable"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:shrinkColumns="*"
-        android:stretchColumns="*">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".80"
+        android:background="#303952"
+        android:orientation="vertical">
 
-<!--        insert tiles here-->
-
-        <TableRow
-            android:id="@+id/buttonRow"
+        <TableLayout
+            android:id="@+id/mainTable"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/createButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/buttons"
-                android:text="Create Note"
-                android:textColor="@color/fontColor" />
-        </TableRow>
+            <!--        insert tiles here-->
 
-    </TableLayout>
+        </TableLayout>
 
-</ScrollView>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/createButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/buttons"
+        android:text="Create Note"
+        android:textColor="@color/fontColor" />
+</LinearLayout>
