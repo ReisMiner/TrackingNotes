@@ -22,10 +22,10 @@ class writeNote : AppCompatActivity() {
             deleteNote()
         }
     }
-
+    val titleEditView = findViewById<EditText>(R.id.TextViewSaveTitle)
+    val contentEditView = findViewById<EditText>(R.id.TextViewSaveText)
     private fun saveNote (){
-        val titleEditView = findViewById<EditText>(R.id.TextViewSaveTitle)
-        val contentEditView = findViewById<EditText>(R.id.TextViewSaveText)
+
 
         openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
             it.write(contentEditView.text.toString().toByteArray())
@@ -35,10 +35,11 @@ class writeNote : AppCompatActivity() {
     }
 
     private fun deleteNote(){
-        this.openFileInput("TestingLeTest").bufferedReader().useLines { lines ->
-            lines.fold("") { some, text ->
-                "$some\n$text"
-            }
-        }
+//        this.openFileInput("TestingLeTest").bufferedReader().useLines { lines ->
+//            lines.fold("") { some, text ->
+//                "$some\n$text"
+//            }
+//        }
+
     }
 }
