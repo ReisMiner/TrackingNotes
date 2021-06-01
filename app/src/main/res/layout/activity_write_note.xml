@@ -7,7 +7,7 @@
     android:background="@color/appBG"
     tools:context=".writeNote" >
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="361dp"
         android:layout_height="43dp"
