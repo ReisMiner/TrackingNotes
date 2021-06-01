@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatButton
 
@@ -34,6 +35,10 @@ class writeNote : AppCompatActivity() {
     }
 
     private fun deleteNote(){
-
+        this.openFileInput("TestingLeTest").bufferedReader().useLines { lines ->
+            lines.fold("") { some, text ->
+                "$some\n$text"
+            }
+        }
     }
 }
