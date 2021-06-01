@@ -31,6 +31,7 @@ class writeNote : AppCompatActivity() {
         //set title and content according to pressed tile
         if(!intent.getBooleanExtra("new",true)){
             titleEditView.setText(intent.getStringExtra("title"))
+            contentEditView.setText(intent.getStringExtra("content"))
         }
     }
 
@@ -44,11 +45,6 @@ class writeNote : AppCompatActivity() {
     }
 
     private fun deleteNote(){
-//        this.openFileInput("TestingLeTest").bufferedReader().useLines { lines ->
-//            lines.fold("") { some, text ->
-//                "$some\n$text"
-//            }
-//        }
-
+        //todo
     }
 }
