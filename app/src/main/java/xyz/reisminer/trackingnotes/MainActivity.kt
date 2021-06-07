@@ -7,15 +7,21 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import java.io.BufferedReader
 import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createHomeTiles(10)
+        trackUser()
 
         val createButton = findViewById<AppCompatButton>(R.id.createButton)
         createButton.setOnClickListener {
@@ -91,6 +97,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finishAffinity()
+    }
+
+    private fun trackUser(){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
 }
