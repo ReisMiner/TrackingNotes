@@ -114,6 +114,8 @@ class MainActivity : AppCompatActivity() {
     private var fusedLocationProvider: FusedLocationProviderClient? = null
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        numUpdates =1
+        interval=5
 
     }
 
