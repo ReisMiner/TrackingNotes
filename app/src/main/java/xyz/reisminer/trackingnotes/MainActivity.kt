@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import java.io.BufferedReader
@@ -88,6 +87,10 @@ class MainActivity : AppCompatActivity() {
         }
         intent.putExtra("new", false)
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        finishAffinity()
     }
 
 }

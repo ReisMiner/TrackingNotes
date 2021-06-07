@@ -11,8 +11,8 @@ import java.io.File
 
 class writeNote : AppCompatActivity() {
 
-    private lateinit var titleEditView: EditText;
-    private lateinit var contentEditView: EditText;
+    private lateinit var titleEditView: EditText
+    private lateinit var contentEditView: EditText
     private var filePath: String = "huh"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,18 +41,22 @@ class writeNote : AppCompatActivity() {
 
     private fun saveNote() {
 
-        openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
-            it.write(contentEditView.text.toString().toByteArray())
+        if (titleEditView.text.toString().isEmpty()) {
+            Toast.makeText(this, "Cannot save note without title!", Toast.LENGTH_SHORT).show()
+        } else {
+            openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
+                it.write(contentEditView.text.toString().toByteArray())
+            }
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
     }
 
     private fun deleteNote() {
 
-        if (filePath!="huh") {
+        if (filePath != "huh") {
 
-            val file: File = File(filePath)
+            val file = File(filePath)
             val deleted = file.delete()
 
             if (deleted) {
@@ -62,6 +66,11 @@ class writeNote : AppCompatActivity() {
             }
         }
 
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
