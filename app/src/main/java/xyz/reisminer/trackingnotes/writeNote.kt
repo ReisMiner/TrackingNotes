@@ -44,11 +44,16 @@ class writeNote : AppCompatActivity() {
         if (titleEditView.text.toString().isEmpty()) {
             Toast.makeText(this, "Cannot save note without title!", Toast.LENGTH_SHORT).show()
         } else {
-            openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
-                it.write(contentEditView.text.toString().toByteArray())
+            if (titleEditView.text.toString().length < 40) {
+                openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
+                    it.write(contentEditView.text.toString().toByteArray())
+                }
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }else{
+                Toast.makeText(this, "Cannot save note with such a large title!", Toast.LENGTH_SHORT).show()
             }
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+
         }
     }
 
