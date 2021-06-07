@@ -11,7 +11,6 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -20,11 +19,11 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import java.io.BufferedReader
 import java.io.File
+import java.math.BigInteger
+import java.security.MessageDigest
 
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,10 +111,8 @@ class MainActivity : AppCompatActivity() {
 
     private var fusedLocationProvider: FusedLocationProviderClient? = null
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
-        interval = 30
-        fastestInterval = 10
         priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        maxWaitTime = 60
+
     }
 
     private var locationCallback: LocationCallback = object : LocationCallback() {
@@ -126,10 +123,11 @@ class MainActivity : AppCompatActivity() {
                 val location = locationList.last()
                 Toast.makeText(
                     this@MainActivity,
-                    "Got Location: " + location.toString(),
+                    "Got Location: " + location.latitude +" "+ location.longitude,
                     Toast.LENGTH_LONG
-                )
-                    .show()
+                ).show()
+
+                md5(location.latitude.toString())
             }
         }
     }
@@ -251,5 +249,10 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
+    }
+
+    fun md5(input:String): String {
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
     }
 }
