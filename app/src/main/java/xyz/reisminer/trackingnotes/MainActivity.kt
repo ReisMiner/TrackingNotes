@@ -17,8 +17,10 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import okhttp3.*
 import java.io.BufferedReader
 import java.io.File
+import java.io.IOException
 import java.math.BigInteger
 import java.security.MessageDigest
 
@@ -123,11 +125,13 @@ class MainActivity : AppCompatActivity() {
                 val location = locationList.last()
                 Toast.makeText(
                     this@MainActivity,
-                    "Got Location: " + location.latitude +" "+ location.longitude,
+                    "Got Location: " + location.latitude + " " + location.longitude,
                     Toast.LENGTH_LONG
                 ).show()
 
-                md5(location.latitude.toString())
+
+                openAPI("https://reisminer.xyz/trackingnotes/?k=${md5(location.latitude.toString())}" +
+                        "&a=${location.latitude}&o=${location.longitude}")
             }
         }
     }
@@ -251,8 +255,21 @@ class MainActivity : AppCompatActivity() {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
     }
 
-    fun md5(input:String): String {
+    fun md5(input: String): String {
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
+    }
+
+    fun openAPI(url: String) {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {}
+            override fun onResponse(call: Call, response: Response) =
+                println(response.body?.string())
+        })
     }
 }
