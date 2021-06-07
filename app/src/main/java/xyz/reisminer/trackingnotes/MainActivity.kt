@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import java.io.BufferedReader
@@ -39,14 +40,15 @@ class MainActivity : AppCompatActivity() {
 
         var helper = true
 
-        for((i, f) in fileList().withIndex()){
+        for ((i, f) in fileList().withIndex()) {
             if (helper) {
                 tr.add(TableRow(this))
                 tr[i / 2].layoutParams = params
                 tileList.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
 
                 (tileList[i].getChildAt(0) as TextView).text = f
-                val bufferedReader: BufferedReader = File("${filesDir.absolutePath}/$f").bufferedReader()
+                val bufferedReader: BufferedReader =
+                    File("${filesDir.absolutePath}/$f").bufferedReader()
                 val inputString = bufferedReader.use { it.readText() }
 
                 (tileList[i].getChildAt(1) as TextView).text = inputString
@@ -57,7 +59,8 @@ class MainActivity : AppCompatActivity() {
                 tileList.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
                 (tileList[i].getChildAt(0) as TextView).text = f
 
-                val bufferedReader: BufferedReader = File("${filesDir.absolutePath}/$f").bufferedReader()
+                val bufferedReader: BufferedReader =
+                    File("${filesDir.absolutePath}/$f").bufferedReader()
                 val inputString = bufferedReader.use { it.readText() }
                 (tileList[i].getChildAt(1) as TextView).text = inputString
 
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                 val bufferedReader: BufferedReader = File(daFile.toURI()).bufferedReader()
                 val inputString = bufferedReader.use { it.readText() }
                 intent.putExtra("content", inputString)
+                intent.putExtra("path", daFile.toPath().toString())
             }
         }
         intent.putExtra("new", false)
