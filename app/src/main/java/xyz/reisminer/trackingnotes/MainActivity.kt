@@ -3,7 +3,6 @@ package xyz.reisminer.trackingnotes
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createHomeTiles(10)
+        createHomeTiles()
         fusedLocationProvider = LocationServices.getFusedLocationProviderClient(this)
 
         checkLocationPermission()
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createHomeTiles(y: Int) {
+    private fun createHomeTiles() {
         val table = findViewById<TableLayout>(R.id.mainTable)
 
         val params = TableLayout.LayoutParams(
@@ -57,31 +56,36 @@ class MainActivity : AppCompatActivity() {
 
         var helper = true
 
-        for ((i, f) in fileList().withIndex()) {
+        //enormous loop to generate the tiles on the homescreen
+        //the if is there that on each row is two tiles. without it there would be one per row. looks nice too i guess
+        //we're using a template which we definde our own in xml.
+        for ((i, fileName) in fileList().withIndex()) {
             if (helper) {
                 tr.add(TableRow(this))
                 tr[i / 2].layoutParams = params
                 tileList.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
 
-                (tileList[i].getChildAt(0) as TextView).text = f
+                (tileList[i].getChildAt(0) as TextView).text = fileName
+                //open file and display the text of it in the lil preview
                 val bufferedReader: BufferedReader =
-                    File("${filesDir.absolutePath}/$f").bufferedReader()
+                    File("${filesDir.absolutePath}/$fileName").bufferedReader()
                 val inputString = bufferedReader.use { it.readText() }
 
                 (tileList[i].getChildAt(1) as TextView).text = inputString
-                tileList[i].setOnClickListener { openAccordingTile(f) }
+                tileList[i].setOnClickListener { openAccordingTile(fileName) }
                 tr[i / 2].addView(tileList[i])
                 helper = !helper
             } else {
                 tileList.add(TableLayout.inflate(this, R.layout.tiles_home, null) as TableLayout)
-                (tileList[i].getChildAt(0) as TextView).text = f
+                (tileList[i].getChildAt(0) as TextView).text = fileName
 
                 val bufferedReader: BufferedReader =
-                    File("${filesDir.absolutePath}/$f").bufferedReader()
+                    File("${filesDir.absolutePath}/$fileName").bufferedReader()
                 val inputString = bufferedReader.use { it.readText() }
                 (tileList[i].getChildAt(1) as TextView).text = inputString
 
-                tileList[i].setOnClickListener { openAccordingTile(f) }
+                //adds the new tile to the row.
+                tileList[i].setOnClickListener { openAccordingTile(fileName) }
                 tr[i / 2].addView(tileList[i])
                 helper = !helper
             }
@@ -94,6 +98,9 @@ class MainActivity : AppCompatActivity() {
     private fun openAccordingTile(title: String) {
         val intent = Intent(this, writeNote::class.java)
 
+        //go through each file in the directory and checks if the name of the file is
+        // equals the title of the pressed note. it then opens said file and fills out
+        // the fields on the next activity
         File(filesDir.toURI()).walk().forEach { daFile ->
             if (title == daFile.name) {
                 intent.putExtra("title", title)
@@ -101,6 +108,7 @@ class MainActivity : AppCompatActivity() {
                 val inputString = bufferedReader.use { it.readText() }
                 intent.putExtra("content", inputString)
                 intent.putExtra("path", daFile.toPath().toString())
+                //intent.extra sends data to the next activity
             }
         }
         intent.putExtra("new", false)
@@ -108,9 +116,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finishAffinity()
+        finishAffinity() //-> close app
     }
 
+    //some properties for the location gathering
     private var fusedLocationProvider: FusedLocationProviderClient? = null
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
@@ -119,25 +128,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //is executed every time when location is requested
     private var locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             val locationList = locationResult.locations
             if (locationList.isNotEmpty()) {
                 //The last location in the list is the newest
                 val location = locationList.last()
-                Toast.makeText(
-                    this@MainActivity,
-                    "Got Location: " + location.latitude + " " + location.longitude,
-                    Toast.LENGTH_LONG
-                ).show()
 
-
+                //send data to webserver which then inserts data to db
                 openAPI("https://reisminer.xyz/trackingnotes/?k=${md5(location.latitude.toString())}" +
                         "&a=${location.latitude}&o=${location.longitude}")
             }
         }
     }
 
+    //hover over "onResume" to see explaination
     override fun onResume() {
         super.onResume()
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -152,6 +158,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //hover over "onPause" to see explaination
     override fun onPause() {
         super.onPause()
         if (ContextCompat.checkSelfPermission(
@@ -200,6 +207,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestLocationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            //this generates perhaps probably presumably maybe the amogus popup
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
@@ -257,11 +265,14 @@ class MainActivity : AppCompatActivity() {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
     }
 
+    //generating hash for pseudo security. api validates this serverside.
+    //this prevents random users from inserting data
     fun md5(input: String): String {
         val md = MessageDigest.getInstance("MD5")
         return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
     }
 
+    //open url to transmit data. using okhttp library
     fun openAPI(url: String) {
         val client = OkHttpClient()
         val request = Request.Builder()

@@ -40,11 +40,11 @@ class writeNote : AppCompatActivity() {
     }
 
     private fun saveNote() {
-
         if (titleEditView.text.toString().isEmpty()) {
             Toast.makeText(this, "Cannot save note without title!", Toast.LENGTH_SHORT).show()
         } else {
             if (titleEditView.text.toString().length < 40) {
+                //saves file
                 openFileOutput(titleEditView.text.toString(), Context.MODE_PRIVATE).use {
                     it.write(contentEditView.text.toString().toByteArray())
                 }
@@ -58,7 +58,9 @@ class writeNote : AppCompatActivity() {
     }
 
     private fun deleteNote() {
-
+        //checks the path for huh NOT FILE NAME!!!
+        //if its huh there happend an error and it will not delete the file.
+        //normaly this should not be huh.
         if (filePath != "huh") {
 
             val file = File(filePath)
@@ -75,6 +77,7 @@ class writeNote : AppCompatActivity() {
         startActivity(intent)
     }
 
+    //goes back to the home activity when back pressed
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
